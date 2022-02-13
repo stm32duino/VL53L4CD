@@ -43,6 +43,8 @@
 #include "Wire.h"
 #include "vl53l4cd_api.h"
 
+typedef float float_t;
+
 /* Classes -------------------------------------------------------------------*/
 /** Class representing a VL53LX sensor component
  */

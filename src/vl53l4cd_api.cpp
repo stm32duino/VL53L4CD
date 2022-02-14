@@ -325,7 +325,7 @@ VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetRangeTiming(
   VL53L4CD_ERROR status = VL53L4CD_ERROR_NONE;
   uint16_t clock_pll, osc_frequency, ms_byte;
   uint32_t macro_period_us = 0, timing_budget_us = 0, ls_byte, tmp;
-  float_t inter_measurement_factor = (float_t)1.055;
+  float inter_measurement_factor = (float)1.055;
 
   status |= VL53L4CD_RdWord(dev, 0x0006, &osc_frequency);
   if (osc_frequency != (uint16_t)0) {
@@ -352,8 +352,8 @@ VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetRangeTiming(
                               VL53L4CD_RESULT_OSC_CALIBRATE_VAL, &clock_pll);
     clock_pll = clock_pll & (uint16_t)0x3FF;
     inter_measurement_factor = inter_measurement_factor
-                               * (float_t)inter_measurement_ms
-                               * (float_t)clock_pll;
+                               * (float)inter_measurement_ms
+                               * (float)clock_pll;
     status |= VL53L4CD_WrDWord(dev, VL53L4CD_INTERMEASUREMENT_MS,
                                (uint32_t)inter_measurement_factor);
 
@@ -405,14 +405,14 @@ VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetRangeTiming(
   VL53L4CD_ERROR status = VL53L4CD_ERROR_NONE;
   uint16_t osc_frequency = 1, range_config_macrop_high, clock_pll = 1;
   uint32_t tmp, ls_byte, ms_byte, macro_period_us;
-  float_t clock_pll_factor = (float_t)1.065;
+  float clock_pll_factor = (float)1.065;
 
   /* Get InterMeasurement */
   status |= VL53L4CD_RdDWord(dev, VL53L4CD_INTERMEASUREMENT_MS, &tmp);
   status |= VL53L4CD_RdWord(dev,
                             VL53L4CD_RESULT_OSC_CALIBRATE_VAL, &clock_pll);
   clock_pll = clock_pll & (uint16_t)0x3FF;
-  clock_pll_factor = clock_pll_factor * (float_t)clock_pll;
+  clock_pll_factor = clock_pll_factor * (float)clock_pll;
   clock_pll = (uint16_t)clock_pll_factor;
   *p_inter_measurement_ms = (uint16_t)(tmp / (uint32_t)clock_pll);
 

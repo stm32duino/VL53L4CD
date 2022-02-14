@@ -121,10 +121,10 @@ VL53L4CD_ERROR VL53L4CD::VL53L4CD_CalibrateXtalk(
 {
   VL53L4CD_ERROR status = VL53L4CD_ERROR_NONE;
   uint8_t i, tmp, continue_loop;
-  float_t AverageSignal = (float_t)0.0;
-  float_t AvgDistance = (float_t)0.0;
-  float_t AverageSpadNb = (float_t)0.0;
-  float_t tmp_xtalk;
+  float AverageSignal = (float)0.0;
+  float AvgDistance = (float)0.0;
+  float AverageSpadNb = (float)0.0;
+  float tmp_xtalk;
   VL53L4CD_Result_t results;
 
   uint16_t calXtalk, j;
@@ -178,18 +178,18 @@ VL53L4CD_ERROR VL53L4CD::VL53L4CD_CalibrateXtalk(
 
       status |= VL53L4CD_GetResult(&results);
       status |= VL53L4CD_ClearInterrupt();
-      AvgDistance += (float_t)results.distance_mm;
-      AverageSpadNb += (float_t)results.number_of_spad;
-      AverageSignal += (float_t)results.signal_rate_kcps;
+      AvgDistance += (float)results.distance_mm;
+      AverageSpadNb += (float)results.number_of_spad;
+      AverageSignal += (float)results.signal_rate_kcps;
     }
     status |= VL53L4CD_StopRanging();
-    AvgDistance = AvgDistance / (float_t)nb_samples;
-    AverageSpadNb = AverageSpadNb / (float_t)nb_samples;
-    AverageSignal = AverageSignal / (float_t)nb_samples;
+    AvgDistance = AvgDistance / (float)nb_samples;
+    AverageSpadNb = AverageSpadNb / (float)nb_samples;
+    AverageSignal = AverageSignal / (float)nb_samples;
 
-    tmp_xtalk = (float_t)512.0 * (AverageSignal *
-                                  ((float_t)1.0 - (AvgDistance
-                                                   / (float_t)TargetDistInMm))) / AverageSpadNb;
+    tmp_xtalk = (float)512.0 * (AverageSignal *
+                                ((float)1.0 - (AvgDistance
+                                               / (float)TargetDistInMm))) / AverageSpadNb;
     calXtalk = (uint16_t)tmp_xtalk;
     *p_measured_xtalk_kcps = (uint16_t)(calXtalk * (uint16_t)1000) >> 9;
     status |= VL53L4CD_WrWord(dev,

@@ -188,8 +188,8 @@ VL53L4CD_ERROR VL53L4CD::VL53L4CD_CalibrateXtalk(
     AverageSignal = AverageSignal / (float)nb_samples;
 
     tmp_xtalk = (float)512.0 * (AverageSignal *
-                                  ((float)1.0 - (AvgDistance
-                                                   / (float)TargetDistInMm))) / AverageSpadNb;
+                                ((float)1.0 - (AvgDistance
+                                               / (float)TargetDistInMm))) / AverageSpadNb;
     calXtalk = (uint16_t)tmp_xtalk;
     *p_measured_xtalk_kcps = (uint16_t)(calXtalk * (uint16_t)1000) >> 9;
     status |= VL53L4CD_WrWord(dev,

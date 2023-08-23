@@ -185,8 +185,8 @@ uint8_t VL53L4CD::VL53L4CD_I2CWrite(uint8_t DeviceAddr, uint16_t RegisterAddress
     } else {
       i += current_write_size;
       if (size - i) {
-        // Flush buffer but do not send stop bit so we can keep going
-        dev_i2c->endTransmission(false);
+        // Flush buffer and send stop bit so we have compatibility also with ESP32 platforms
+        dev_i2c->endTransmission(true);
       }
     }
   }

@@ -130,7 +130,7 @@ class VL53L4CD {
 
       status = VL53L4CD_GetSensorId(&sensor_id);
 
-      if (status != VL53L4CD_ERROR_NONE || (sensor_id != 0xebaa)) {
+      if (status != VL53L4CD_ERROR_NONE || ((sensor_id != 0xebaa) && (sensor_id != 0xecaa))) {
         return VL53L4CD_ERROR_TIMEOUT;
       }
 

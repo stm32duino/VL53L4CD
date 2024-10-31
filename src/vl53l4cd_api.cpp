@@ -474,6 +474,11 @@ VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetResult(
                             &temp_16);
   p_result->number_of_spad = temp_16 / (uint16_t) 256;
 
+  if (p_result->number_of_spad == 0) {
+ 	  p_result->range_status = 255;
+	  return status;
+  }
+
   status |= VL53L4CD_RdWord(dev, VL53L4CD_RESULT_SIGNAL_RATE,
                             &temp_16);
   p_result->signal_rate_kcps = temp_16 * (uint16_t) 8;
